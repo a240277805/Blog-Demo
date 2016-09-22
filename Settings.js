@@ -1,5 +1,5 @@
 module.exports={
     cookieSecret:'microblogbyvoid',
-    db:'zmk',
+    db:'WeiBoUser',
     host:'localhost',
 };

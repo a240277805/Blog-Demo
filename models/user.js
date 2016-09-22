@@ -1,56 +1,21 @@
-/**
- * Created by zmk on 2016/8/30.
- */
-var mongodb=require('./db');
-function User(user) {
-    this.name=user.name;
-    this.password=user.password;
-};
-module.exports=User;
-User.prototype.save=function save(callback) {
-    //存入Mongodb的文档
-    var user={
-        name:this.name,
-        password:this.password
-    };
-    mongodb.open(function (err,db) {
-        if(err)
-        {
-            return callback(err);
-        }
-        //读取users集合
-        db.collection('users',function (err,collection) {
-            if(err){
-                mongodb.close();
-                return callback(err);
-            }
-            //为name属性添加索引
-            collection.ensureIndex('name',{unique:true});
-            //写入user文档
-            collection.insert(user,{safe:true},function (err,user) {
-                mongodb.close();
-                callback(err,user);
-            })
-        });
+var mymongoose = require('mongoose');
 
-    });
-};
-User.get=function get(username,callback) {
-    mongodb.open(function (err,db) {
-        if(err){
-            return callback(err);
-        }
-        //读取user集合
-        db.collection('users',function (err,collection) {
-            if(err){
-                mongodb.close();
-                return callback(err);
-            }
-            //查找name属性为username的文档
-            collection.findOne({name:username},function (err,doc) {
-                mongodb.cl
-            })
-        })
+var UserSchema = new mymongoose.Schema({
+    name : String,
+    password : String,
+    CalledName:String,
+});
 
-    })
+//添加
+//这里面的这个methods是固定的 代表添加实例方法
+UserSchema.methods.addUser = function(User, callback){
+    this.name = User.name;
+    this.password = User.password;
+    this.save(callback);
 }
+
+
+//这里面的movies是数据库的一个集合
+var myUser = mymongoose.model('User', UserSchema);
+
+module.exports = myUser;

@@ -1,5 +1,13 @@
 <div class="hero-unit">
-  <h1>欢迎来到 张孟康的微博网站</h1>
+
+  <%if(username!=null){%>
+  <h1><%=username%>的微博网站</h1>
+  <p>
+    <a class="btn btn-primary btn-large" href="/Logout">退出登陆</a>
+    <a class="btn btn-large" href="/users/<%=username%>">发表文章</a>
+  </p>
+  <%}else{%>
+  <h1>欢迎来到微博网站</h1>
   <p>
     Micro个log 是一个基于Node.js的微博系统。
   </p>
@@ -7,6 +15,9 @@
     <a class="btn btn-primary btn-large" href="/login">登陆</a>
     <a class="btn btn-large" href="/reg">立即注册</a>
   </p>
+  <%}%>
+
+
 </div>
 <div class="row">
   <div class="span4">

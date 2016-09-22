@@ -1,7 +1,8 @@
-var settings=require('../Settings');
-var Db=require('mongodb').Db;
-var Connection=require('mongodb').Connection;
-var Server=require('mongodb').Server;
-
-
-module.exports=new Db(settings.db,new Server(settings.host,Connection.port,{}));
+var mongoose=require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/WeiBoUser');
+var db=mongoose.connection;
+module.exports={
+    "dbCon":db,
+    "mongoose":mongoose
+};
