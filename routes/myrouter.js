@@ -37,9 +37,9 @@ exports.post = function(req, res){
         req.session.success = "发表成功";
         res.setHeader('content-type', 'text/html;charset=utf-8');
         console.log("success Post");
-        console.log(encodeURIComponent("/users/"+ currentUser.name));
+        console.log(encodeURIComponent("/users/" + currentUser.name));
 
-        res.redirect( "/users/"+encodeURIComponent( currentUser.name));
+        res.redirect("/users/" + encodeURIComponent(currentUser.name));
     });
 
 };
@@ -97,7 +97,7 @@ exports.doReg = function(req, res){
 exports.Login = function(req, res){
     res.render('login', {
         title : '用户登陆',
-        layout : 'layout'
+        layout : 'layout',
     });
 };
 exports.doLogin = function(req, res){
@@ -124,7 +124,7 @@ exports.doLogin = function(req, res){
 };
 // 退出登陆
 exports.Logout = function(req, res){
-   req.session.user='undefined';
+    req.session.user = 'undefined';
     res.redirect('/');
 };
 
