@@ -1,0 +1,15 @@
+<div class="hero-unit">
+    <h1>
+        <%= thename %>的信息
+    </h1>
+    <%if(ishost){%>
+    <p></p>
+    <form method="post" action="/post">
+        <input type="text" name='article' id='article' placeholder='说出你此刻的想法...'/>
+        <input type='submit' name='submit' value='发表'/>
+    </form>
+    <%}%>
+</div>
+<%- include microblogs.ejs %>
+
+

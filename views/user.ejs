@@ -1,21 +1,14 @@
-<div class="hero-unit">
-    <h1>
-        <%= thename %>的个人主页
-    </h1>
-    <p></p>
-    <form method="post" action="/post">
-        <input type="text" name='article' id='article' placeholder='说出你此刻的想法...'/>
-        <input type='submit' name='submit' value='发表'/>
-    </form>
+<div class="row">
+    <div class="hero-unit">
+        <h1>
+            <%= thename %>的个人主页
+        </h1>
+        <p></p>
+        <form method="post" action="/post">
+            <input type="text" name='article' id='article' placeholder='说出你此刻的想法...'/>
+            <input type='submit' name='submit' value='发表'/>
+        </form>
+    </div>
 </div>
-<div>
-    <ul>
-        <% posts.forEach(function(post){ %>
-        <div class="span4">
-            <h2><%=post.username%>说</h2>
-            <p><%=post.article%> </p>
-        </div>
-        <% }); %>
-    </ul>
-</div>
+<%- include microblogs.ejs %>
 
