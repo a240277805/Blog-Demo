@@ -6,6 +6,7 @@ var mymongoose = require('mongoose');
 var PostSchema = new mymongoose.Schema({
     username : String,
     article : String,
+    imgpath:String,
     time : String,
 });
 
@@ -23,3 +24,4 @@ PostSchema.methods.addPost = function(Post, callback){
 var myPost = mymongoose.model('Post', PostSchema);
 
 module.exports = myPost;
+module.exports.remove=myPost.remove;

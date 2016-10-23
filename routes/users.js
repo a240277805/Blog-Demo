@@ -5,7 +5,7 @@ var Post = require('../models/post');
 /* GET users listing. */
 router.get('/:username', function(req, res, next){
     console.log("users Entered");
-    if(req.params.username == null || req.session.user.name != req.params.username){
+    if(req.params.username == null){
         req.session.message = "用户不存在";
         return res.redirect('/');
     }
@@ -16,10 +16,19 @@ router.get('/:username', function(req, res, next){
             req.session.message = err.message;
             return res.redirect('/');
         }
-        res.render('user', {
+        var maxshowcount = 0;
+        if(posts.length > 9){
+            maxshowcount = 9;
+        }
+        else {
+            maxshowcount = posts.length;
+        }
+        var ishost=req.params.username==req.session.user.name;
+        res.render('information', {
             title : "发表文章",
             thename : req.params.username,
-            username : req.params.user,
+            ishost:ishost,
+            maxshowcount : maxshowcount,
             posts : posts
         });
     });

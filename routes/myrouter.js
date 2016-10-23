@@ -1,18 +1,51 @@
 var User = require('../models/user');
 var crypto = require('crypto');
 var Post = require('../models/post');
+var http = require('http');
 
 exports.index = function(req, res){
-    Post.find({}, function(err, posts){
+    Post.find({}).sort({'_id' : -1}).limit(9).exec(function(err, posts){
         if(err){
             req.session.message = err.message;
             return res.redirect('/');
         }
+        var maxshowcount = 0;
+        if(posts.length > 9){
+            maxshowcount = 9;
+        }
+        else {
+            maxshowcount = posts.length;
+        }
+
         res.render('index', {
             title : '首页',
-            layout : 'layout'
+            layout : 'layout',
+            maxshowcount : maxshowcount,
+            posts : posts
         });
     });
+
+
+    // Post.find({}, function(err, posts){
+    //     if(err){
+    //         req.session.message = err.message;
+    //         return res.redirect('/');
+    //     }
+    //     var maxshowcount=0;
+    //     if(posts.length>9){
+    //         maxshowcount=9;
+    //     }
+    //     else {
+    //         maxshowcount=posts.length;
+    //     }
+    //
+    //     res.render('index', {
+    //         title : '首页',
+    //         layout : 'layout',
+    //         maxshowcount:maxshowcount,
+    //         posts:posts
+    //     });
+    // });
 };
 exports.user = function(req, res){
     console.log("000000000000000000000000 Clik User");
@@ -22,13 +55,29 @@ exports.user = function(req, res){
     });
 };
 exports.post = function(req, res){
-    console.log("post click");
     var currentUser = req.session.user;
-    var post = new Post({
-        username : currentUser.name,
-        article : req.body.article,
-        time : getTime(new Date())
-    });
+    var post = new Post();
+    //将文件写入到图片资源库
+    if(req.body.uploadimage && req.body.uploadimage != null && req.body.uploadimage != ""){
+        var imgpath = 'http://localhost:3001/photos/test.jpg';//暂时
+
+        imgpath = 'http://localhost:3001/photos/' + req.body.uploadimage;
+        post = new Post({
+            username : currentUser.name,
+            article : req.body.article,
+            imgpath : imgpath,
+            time : getTime(new Date())
+        });
+    }
+    else {
+        post = new Post({
+            username : currentUser.name,
+            article : req.body.article,
+            time : getTime(new Date())
+        });
+    }
+
+
     post.addPost(post, function(err){
         if(err){
             req.session.message = err.message;
@@ -36,13 +85,11 @@ exports.post = function(req, res){
         }
         req.session.success = "发表成功";
         res.setHeader('content-type', 'text/html;charset=utf-8');
-        console.log("success Post");
-        console.log(encodeURIComponent("/users/" + currentUser.name));
-
         res.redirect("/users/" + encodeURIComponent(currentUser.name));
     });
 
-};
+}
+;
 exports.Reg = function(req, res){
     res.render('reg', {
         title : '用户注册',
@@ -111,14 +158,16 @@ exports.doLogin = function(req, res){
                 req.session.user = finduser;
                 req.session.success = "登陆成功";
 
-                // res.locals.user = finduser;
-                // res.locals.success = "登陆成功";
                 res.redirect('/');
             }
             else {
                 req.session.error = "密码输入错误";
-                res.redirect('/');
+                res.redirect("/login/");
             }
+        }
+        else {
+            req.session.error = "没有此用户！";
+            res.redirect("/login/");
         }
     });
 };
@@ -130,9 +179,5 @@ exports.Logout = function(req, res){
 
 
 function getTime(date){
-    return date.getFullYear() +
-        "-" + date.getMonth() + 1 + "-" +
-        date.getDate() + " " +
-        date.getHours() + ":" +
-        date.getMinutes();
+    return date.toLocaleDateString() + " " + date.toLocaleTimeString();
 }

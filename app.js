@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var posts=require('./routes/posts');
 var db = require('./models/db');
 
 var session = require('express-session');
@@ -21,8 +22,8 @@ app.set('view engine', 'ejs');
  app.use(partials());
 app.use(favicon(path.join(__dirname, 'public', 'icon.png')));
 // app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended : false}));
+app.use(bodyParser.json());
+ app.use(bodyParser.urlencoded({extended : false}));
 // app.use(cookieParser());//是Cookie解析的中间件。express.session()提供会话支持 。
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -65,6 +66,7 @@ app.use(function(req, res, next){
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/posts', posts);
 app.use(flash());
 app.use(function(req, res, next){
     res.locals.flash = req.flash;

@@ -1,6 +1,9 @@
 <div class="span4">
 <%-include headerinfo.ejs%>
  <p><%= posts[i].article %> </p>
+ <%if(posts[i].imgpath){%>
+ <img id="img" src="<%= posts[i].imgpath%>" style="width:180px;height:140px;margin:5px"/>
+ <%}%>
  <p><%= posts[i].time %> </p>
 
 </div>

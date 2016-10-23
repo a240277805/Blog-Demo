@@ -1,11 +1,39 @@
+
+<!--跨域发送请求-->
+<script>
+    function cansubmit(){
+        var formdata = new FormData();
+        var imagefiles =  document.getElementById("uploadimage");
+        var fileObj = imagefiles.files[0];
+        if(!fileObj)
+        {
+            return true;
+        }
+        url = "http://localhost:3001/upload";
+        //var fileObj=document.getElementById("fileToUpload").files;
+        formdata.append("imgFile", fileObj);
+        jQuery.ajax({
+            url : url,
+            type : 'post',
+            data : formdata,
+            cache : false,
+            contentType : false,
+            processData : false,
+            async:false,
+            dataType : "json",
+        });
+        return true;
+    }
+</script>
 <div class="hero-unit">
     <h1>
         <%= thename %>的信息
     </h1>
     <%if(ishost){%>
     <p></p>
-    <form method="post" action="/post">
+    <form method="post" action="/post" onsubmit="return cansubmit()">
         <input type="text" name='article' id='article' placeholder='说出你此刻的想法...'/>
+        <input type="file" name="uploadimage"  id="uploadimage" multiple="multiple">
         <input type='submit' name='submit' value='发表'/>
     </form>
     <%}%>
