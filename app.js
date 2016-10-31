@@ -1,7 +1,9 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+// var logger = require('morgan');
+var log4js =require('log4js');
+var log=log4js.getLogger('app');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
@@ -20,6 +22,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
  app.use(partials());
+app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
 app.use(favicon(path.join(__dirname, 'public', 'icon.png')));
 // app.use(logger('dev'));
 app.use(bodyParser.json());
