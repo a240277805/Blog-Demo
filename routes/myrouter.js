@@ -1,7 +1,48 @@
+var express = require('express');
 var User = require('../models/user');
 var crypto = require('crypto');
 var Post = require('../models/post');
 var http = require('http');
+
+var passport = require('passport')
+    , LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy({
+        usernameField : 'username',//页面上的用户名字段的name属性值
+        passwordField : 'password'//页面上的密码字段的name属性值
+    },
+    function(uname, password, done){
+        console.log("enter line myrouter 14 username:"+uname+"password:"+password);
+        // done(null,false,{message:'用户名不存在'});
+        User.findOne({name :uname}, function(err, user){
+            console.log("enter line myrouter 15:");
+            if(err){
+                return done(err);
+            }
+            else if(!user){
+                return done(null, false, {message : '用户名不存在.'});
+            }
+            else if(!user.validPassword(password)){
+                return done(null, false, {message : '密码不匹配.'});
+            }
+            else {
+                console.log("find user"+user)
+                return done(null, user);
+            }
+        });
+    }));
+
+passport.serializeUser(function(user, done){
+    console.log("Enter myrouter line 32:");
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done){
+    console.log("Enter myrouter line 37:");
+    User.findById(id, function(err, user){
+        done(err, user);
+    });
+});
 
 exports.index = function(req, res){
     Post.find({}).sort({'_id' : -1}).limit(9).exec(function(err, posts){
@@ -24,28 +65,6 @@ exports.index = function(req, res){
             posts : posts
         });
     });
-
-
-    // Post.find({}, function(err, posts){
-    //     if(err){
-    //         req.session.message = err.message;
-    //         return res.redirect('/');
-    //     }
-    //     var maxshowcount=0;
-    //     if(posts.length>9){
-    //         maxshowcount=9;
-    //     }
-    //     else {
-    //         maxshowcount=posts.length;
-    //     }
-    //
-    //     res.render('index', {
-    //         title : '首页',
-    //         layout : 'layout',
-    //         maxshowcount:maxshowcount,
-    //         posts:posts
-    //     });
-    // });
 };
 exports.user = function(req, res){
     console.log("000000000000000000000000 Clik User");
@@ -148,29 +167,32 @@ exports.Login = function(req, res){
     });
 };
 exports.doLogin = function(req, res){
-    User.findOne({name : req.body.username}, function(err, finduser){
-        if(err){
-            console.log(err);
-            return;
-        }
-        else if(finduser != null){
-            if(finduser.password == req.body.password){
-                req.session.user = finduser;
-                req.session.success = "登陆成功";
+    console.log("Enter myrouter line 169:");
+   res.redirect('/');
+    /*    User.findOne({name : req.body.username}, function(err, finduser){
+     if(err){
+     console.log(err);
+     return;
+     }
+     else if(finduser != null){
+     if(finduser.password == req.body.password){
+     req.session.user = finduser;
+     req.session.success = "登陆成功";
 
-                res.redirect('/');
-            }
-            else {
-                req.session.error = "密码输入错误";
-                res.redirect("/login/");
-            }
-        }
-        else {
-            req.session.error = "没有此用户！";
-            res.redirect("/login/");
-        }
-    });
+     res.redirect('/');
+     }
+     else {
+     req.session.error = "密码输入错误";
+     res.redirect("/login/");
+     }
+     }
+     else {
+     req.session.error = "没有此用户！";
+     res.redirect("/login/");
+     }
+     });*/
 };
+
 // 退出登陆
 exports.Logout = function(req, res){
     req.session.user = 'undefined';

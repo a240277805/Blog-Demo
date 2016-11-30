@@ -2,14 +2,19 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 // var logger = require('morgan');
-var log4js =require('log4js');
-var log=log4js.getLogger('app');
+var log4js = require('log4js');
+var log = log4js.getLogger('app');
+var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var users = require('./routes/users');
-var posts=require('./routes/posts');
+var posts = require('./routes/posts');
+var test = require('./routes/test');
+var reg = require('./routes/Reg');
+var resource = require('./routes/resource');
+var auth = require('./routes/auth');
 var db = require('./models/db');
 
 var session = require('express-session');
@@ -21,12 +26,12 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
- app.use(partials());
-app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
+app.use(partials());
+app.use(log4js.connectLogger(log4js.getLogger("http"), {level : 'auto'}));
 app.use(favicon(path.join(__dirname, 'public', 'icon.png')));
 // app.use(logger('dev'));
 app.use(bodyParser.json());
- app.use(bodyParser.urlencoded({extended : false}));
+app.use(bodyParser.urlencoded({extended : false}));
 // app.use(cookieParser());//是Cookie解析的中间件。express.session()提供会话支持 。
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -38,6 +43,11 @@ app.use(session({
     rolling : true,
 }));
 
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
 // error handlers
 app.use(function(req, res, next){
     res.setHeader('content-type', 'text/html;charset=UTF-8');
@@ -67,10 +77,14 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use('/', routes);
+app.use('/', index);
+app.use('/', reg);
+app.use('/', auth);
+app.use('/', resource);
+app.use('/', test);
 app.use('/users', users);
-app.use('/posts', posts);
-app.use(flash());
+app.use('/',require('connect-ensure-login').ensureLoggedIn('/login'),  posts);
+
 app.use(function(req, res, next){
     res.locals.flash = req.flash;
     next();

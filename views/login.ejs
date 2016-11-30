@@ -1,3 +1,20 @@
+
+<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc.js"></script>
+<script type="text/javascript">
+QC.Login.insertButton({
+	btnId : 'qqLoginBtn',//插入按钮的html标签id
+	size : 'A_XL',//按钮样式，A、B、C为三种样式，
+		//S、M、L、XL为同一种样式的不同尺寸，支持如下 :
+									//A_S, A_M, A_L, A_XL;
+									//B_S, B_M, B_L;
+									//C_S;
+
+	clientId : '222222',//appId
+	scope : '',//授权范围，可选
+	'btnMode':'showUserAfterLogin'
+});
+</script>
+
 <form class="form-horizontal" method="post">
     <fieldset>
         <legend><%=title%> </legend>
@@ -24,10 +41,13 @@
                     name="password">
             </div>
         </div>
+
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">
+             <button type="submit" class="btn btn-primary">
                 登陆
             </button>
+	     <span id="qqLoginBtn"></span>
         </div>
+
     </fieldset>
 </form>

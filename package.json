@@ -6,16 +6,24 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "Q": "0.0.1",
     "body-parser": "~1.15.1",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": ">=0.1.7",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
     "express": "~4.13.4",
+    "express-partials": "*",
     "jade": "~1.11.0",
+    "mongodb": ">=0.9.9",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0",
-    "mongodb":">=0.9.9",
-    "connect-mongo":">=0.1.7",
-    "express-partials": "*"
+    "multiparty": "^4.1.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "process": "^0.11.9",
+    "q": "^1.4.1",
+    "redis": "^2.6.3",
+    "serve-favicon": "~2.3.0"
   }
 }

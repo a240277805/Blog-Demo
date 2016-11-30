@@ -13,6 +13,9 @@ UserSchema.methods.addUser = function(User, callback){
     this.password = User.password;
     this.save(callback);
 }
+UserSchema.methods.validPassword=function(pas){
+   return this.password===pas;
+}
 
 
 //这里面的movies是数据库的一个集合

@@ -1,19 +1,56 @@
 var express = require('express');
 var router = express.Router();
-var myrouter = require("./myrouter");
-
+var Post = require('../models/post');
+var q =require('q');
+var  redisclient=require('../utils/redisclient');
+// var myrouter = require("./myrouter");
+// var passport = require('passport');
 
 /* GET home page. */
-router.get('/', myrouter.index);
-// router.get('/user/:user', myrouter.user);
-router.post('/post', myrouter.post);
+router.get('/', function(req, res){
+    if(  res.locals.username!==undefined){
 
-router.get('/login', myrouter.Login);
-router.post('/login', myrouter.doLogin);
+        redisclient.getItem("TOP9",function(err,posts){
+            if(err){
+              console.log(err);
+            }
+            if(posts===null){
+                Post.find({}).sort({'_id' : -1}).limit(9).exec(function(err, mongoposts){
+                    if(err){
+                        req.session.message = err.message;
+                        return res.redirect('/');
+                    }
 
-router.get('/reg', myrouter.Reg);
-router.post('/reg',myrouter.doReg);
+                    redisclient.setItem("TOP9",mongoposts,redisclient.defaultExpired);
 
-router.get('/logout', myrouter.Logout);
+                    res.render('index', {
+                        title : '首页',
+                        layout : 'layout',
+                        posts : mongoposts
+                    });
+                });
+            }
+            else
+            {
+                // console.log("find posts from redis");
+                res.render('index', {
+                    title : '首页',
+                    layout : 'layout',
+                    posts : posts
+                });
+            }
 
+        })
+
+    }
+    else {
+        posts = new Post();
+        res.render('index', {
+            title : '首页',
+            layout : 'layout',
+            maxshowcount : 0,
+            posts : posts
+        });
+    }
+});
 module.exports = router;
