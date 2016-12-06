@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fa7b9e90-60c9-498a-b30e-915e40e582f0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.json" afterPath="$PROJECT_DIR$/config.json" />
     </list>
     <ignored path="weibo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -368,6 +365,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="zmk &lt;zhangmengkang@digihail.com&gt;" />
         <option value="zmk" />
         <option value="a240277805 &lt;zhangmengkang@digihail.com&gt;" />
         <option value="aaa" />
@@ -387,7 +385,7 @@
     </option>
     <push-targets>
       <push-target-info repo="$PROJECT_DIR$" source="master" target-remote="origin" target-branch="master" />
-      <push-target-info repo="$PROJECT_DIR$" source="aa" target-remote="w" target-branch="master" />
+      <push-target-info repo="$PROJECT_DIR$" source="aa" target-remote="w" target-branch="aa" />
     </push-targets>
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -669,7 +667,7 @@
       <workItem from="1479967529405" duration="13322000" />
       <workItem from="1480486550782" duration="1178000" />
       <workItem from="1480490753445" duration="304000" />
-      <workItem from="1481037709453" duration="417000" />
+      <workItem from="1481037709453" duration="501000" />
     </task>
     <task id="LOCAL-00001" summary="qq&#10;">
       <created>1474553810910</created>
@@ -776,11 +774,18 @@
       <option name="project" value="LOCAL" />
       <updated>1480487628288</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="qq">
+      <created>1481038182605</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1481038182605</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="212005000" />
+    <option name="totallyTimeSpent" value="212089000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -874,7 +879,8 @@
     <MESSAGE value="qq&#10;" />
     <MESSAGE value="New changelist" />
     <MESSAGE value="Merge remote-tracking branch 'remotes/origin/master' into aa&#10;&#10;# Conflicts:&#10;#&#9;app.js&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'remotes/origin/master' into aa&#10;&#10;# Conflicts:&#10;#&#9;app.js&#10;" />
+    <MESSAGE value="qq" />
+    <option name="LAST_COMMIT_MESSAGE" value="qq" />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
