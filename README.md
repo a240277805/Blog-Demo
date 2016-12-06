@@ -12,3 +12,7 @@ how to use it:
 2.log4js.configure('./config/log4js.json');
 3.var log=log4js.getLogger("startup");
 4.log.info('message');
+
+
+
+12.06  add  new test
