@@ -40,8 +40,19 @@ $RECYCLE.BIN/
 .VolumeIcon.icns
 
 # Directories potentially created on remote AFP share
+.idea
+*.iml
+node_modules
+*.log
+uploadfile
+npm-debug.log*
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
+node_modules/async/apply.js
+*.bak
+.idea/workspace.xml
+.idea/workspace.xml
+test.js
